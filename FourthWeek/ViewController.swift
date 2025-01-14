@@ -32,19 +32,69 @@ class ViewController: UIViewController {
     let greenview = UIView()
     let grayview = UIView()
     
+    lazy var button = { // 둘의 실행 시점이 동일 하기 때문에 button변수를 lazy하게 선언! early return, 즉시 실행함수정도의 네이밍으로 불린다
+        print("함수 실행")
+        let btn = UIButton()
+        btn.setTitle("다음", for: .normal)
+        btn.backgroundColor = .brown
+        btn.addTarget(self, action: #selector(nextBottonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc
+    func nextBottonTapped() {
+        print(#function)
+        let vc = BookViewController()
+        present(vc, animated: true)
+        
+        
+        
+    }
+    
+    func makeMyButton() -> UIButton {
+        
+        let btn = UIButton()
+        btn.setTitle("다음", for: .normal)
+        btn.backgroundColor = .brown
+        return btn
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("뷰디드로드실행")
         autoLayout()
         frameBasedLayout()
         layoutAnchor()
         //autoLayoutSnapKit()
         autoLayoutSnapKit2()
+        configureButton()
+        
     }
+    func configureButton() {
+        view.addSubview(button)
+        button.setTitle("다음", for: .normal)
+        button.backgroundColor = .yellow
+        button.setTitleColor(.black, for: .normal)
+        
+        button.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.width.equalTo(300)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(200)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+    }
+    
+    
+    
+    
+    
     // MARK: - autoLayout2
     func autoLayoutSnapKit2() {
         view.addSubview(redview)
         view.addSubview(grayview)
         redview.addSubview(greenview)
+        
         
         redview.backgroundColor = .red
         grayview.backgroundColor = .gray
@@ -141,7 +191,7 @@ class ViewController: UIViewController {
         
         
         // Constraint 하나 만들기.
-        //         이거 프로토콜로 만들면 편할듯
+        
         let topConstraint = NSLayoutConstraint(item: passwordTextField,
                                                attribute: .top,
                                                relatedBy: .equal,
