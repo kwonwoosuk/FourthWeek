@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 매개변수로 scene을 가져온걸 uiwindowscene으로 타입 캐스팅
         window = UIWindow(windowScene: scene)
         
-        window?.rootViewController = RandomViewController()
+        window?.rootViewController = KakaoBookSearchViewController()
         window?.makeKeyAndVisible() // 이것까지 작성해야 화면에 잘 보인다 
     }
 
