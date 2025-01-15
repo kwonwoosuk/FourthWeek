@@ -67,15 +67,17 @@ class KakaoBookSearchViewController: UIViewController {
         let header: HTTPHeaders = [
             "Authorization": APIKey.kakao
         ]
-        AF.request(url, method: .get, headers: header).responseDecodable(of: Book.self) { response in
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200..<500).responseDecodable(of: Book.self) { response in
+            
+            //print(response.response?.statusCode)
             
             switch response.result{
             case .success(let value):
                 print("success")
                 //dump(value.documents)
-                
                 self.list = value.documents
                 self.tableView.reloadData()
+                
             case .failure(let error):
                 print(error)
             }
