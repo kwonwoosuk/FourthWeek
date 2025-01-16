@@ -9,8 +9,12 @@ import Foundation
 
 struct Book: Decodable {
     let documents: [BookDetail]
+    let meta: Meta
 }
 
+struct Meta: Decodable {
+    let is_end = false
+}
 struct BookDetail: Decodable {
     let contents: String
     let price: Int
