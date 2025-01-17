@@ -21,11 +21,13 @@ class BookViewController: UIViewController {
     // 검색키워드 tableView programmingly
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ud = UserDefaultsManager()
-        ud.age = 70
-        UserDefaultsManager.shared.age
+        //let ud = UserDefaultsManager()
         
-        
+        //UserDefaultsManager.shared.age
+        NetworkManager.shared.randomUser { name in
+            self.navigationItem.title = name
+        }
+
         
     }
 }

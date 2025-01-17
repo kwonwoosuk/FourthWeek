@@ -24,7 +24,7 @@ import Kingfisher
  */
 
 
-
+//17일 네트워크 메니저 분리⭐️
 class KakaoBookSearchViewController: UIViewController {
     
     let searchBar = UISearchBar()
@@ -78,43 +78,25 @@ class KakaoBookSearchViewController: UIViewController {
         tableView.register(KakaoBookSearchTableViewCell.self, forCellReuseIdentifier: KakaoBookSearchTableViewCell.id)
         
     }
-    
     func callRequest(query: String) {
-        print(#function)
-        let url = "https:dapi.kakao.com/v3/search/book?query=\(query)&size=20&page=\(page)"
-        print(#function, url)
-        let header: HTTPHeaders = [
-            "Authorization": APIKey.kakao
-        ]
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200..<500).responseDecodable(of: Book.self) { response in
+        NetworkManager.shared.callkakaoBookAPI(query: query, page: page) { value in
+            self.isEnd = value.meta.is_end
             
-            //print(response.response?.statusCode)
-            
-            switch response.result{
-            case .success(let value):
-                
-                if self.page == 1 {
-                    self.list = value.documents
-                } else {
-                    self.list.append(contentsOf: value.documents)
-                }
-                print("success")
-                //dump(value.documents)
-                //page 1 번 1-20 리스트 어펜드
-                //page 2 번 21-40
-                self.isEnd = value.meta.is_end //  끝났는지 true로 바뀔때 ! -> 이걸활용해서 조건설정은 preFetchRowsAt에서 설정
-                
+            if self.page == 1 {
+                self.list = value.documents
+            } else {
                 self.list.append(contentsOf: value.documents)
-                self.tableView.reloadData()
-                if self.page == 1 {
-                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
-                
-            case .failure(let error):
-                print(error)
             }
+                        
+            self.list.append(contentsOf: value.documents)
+            self.tableView.reloadData()
+            if self.page == 1 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+            
         }
     }
+   
 }
 
 

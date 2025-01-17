@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Alamofire
+
+
 protocol ViewConfiguration: AnyObject { // 클래스에서만 사용가능하도록 anyobject 클래스의 인스턴스만 들어올 수 있음
     func configureHierarchy() // addSubView
     func configureLayout()  //snapKit
@@ -145,17 +147,7 @@ class RandomViewController: UIViewController, ViewConfiguration {
     }
     @objc
     func userButtonTapped() {
-        let url = "https://randomuser.me/api/?results=50"
-        AF.request(url, method: .get).responseDecodable(of: User.self) { response in
-            print("======2======")
-            switch response.result {
-                
-            case .success(let value): // 응답, 식판 => 구조체를 활용할 수 있다.
-                self.nameLabel.text = value.results[0].name.first
-            case .failure(let error):
-                print(error)
-            }
-        }
+        //
     }
 }
 

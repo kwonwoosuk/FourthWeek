@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         // 매개변수로 scene을 가져온걸 uiwindowscene으로 타입 캐스팅
-        let nav = UINavigationController(rootViewController: BookViewController())
+        let nav = UINavigationController(rootViewController: KakaoBookSearchViewController())
         window = UIWindow(windowScene: scene)
         window?.rootViewController = nav
         window?.makeKeyAndVisible() // 이것까지 작성해야 화면에 잘 보인다

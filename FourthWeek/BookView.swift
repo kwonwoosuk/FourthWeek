@@ -31,19 +31,19 @@ class BookView: BaseView {
         return layout
     }
     
-    override func configureView() {
+    override func configureView() { //속성조절
         backgroundColor = .white
         
         
     }
     
-    override func configureLayout() {
+    override func configureLayout() { // 레이아웃 
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    override func configureHierarchy() {
+    override func configureHierarchy() {  // 에드뷰
         addSubview(collectionView)
     }
 }
